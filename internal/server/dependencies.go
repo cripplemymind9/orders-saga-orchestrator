@@ -1,7 +1,15 @@
 package server
 
-type Dependencies struct{}
+import "github.com/cripplemymind9/orders-saga-orchestrator/internal/domain/usecase"
 
-func NewDependencies() *Dependencies {
-	return &Dependencies{}
+type Dependencies struct {
+	getSagaByOrderIDUseCase *usecase.GetSagaByOrderIDUseCase
+}
+
+func NewDependencies(
+	getSagaByOrderIDUseCase *usecase.GetSagaByOrderIDUseCase,
+) *Dependencies {
+	return &Dependencies{
+		getSagaByOrderIDUseCase: getSagaByOrderIDUseCase,
+	}
 }
