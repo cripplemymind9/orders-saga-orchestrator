@@ -70,28 +70,6 @@ func (m *SagaStep) validate(all bool) error {
 
 	// no validation rules for Status
 
-	if utf8.RuneCountInString(m.GetAction()) < 1 {
-		err := SagaStepValidationError{
-			field:  "Action",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetService()) < 1 {
-		err := SagaStepValidationError{
-			field:  "Service",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if len(errors) > 0 {
 		return SagaStepMultiError(errors)
 	}
@@ -214,8 +192,6 @@ func (m *OrderSaga) validate(all bool) error {
 	}
 
 	// no validation rules for Status
-
-	// no validation rules for CurrentStep
 
 	for idx, item := range m.GetSteps() {
 		_, _ = idx, item

@@ -26,59 +26,6 @@ const (
 )
 
 // Статусы шага саги
-type SagaStepStatus int32
-
-const (
-	SagaStepStatus_SAGA_STEP_STATUS_UNSPECIFIED SagaStepStatus = 0
-	SagaStepStatus_SAGA_STEP_STATUS_PENDING     SagaStepStatus = 1
-	SagaStepStatus_SAGA_STEP_STATUS_COMPLETED   SagaStepStatus = 2
-	SagaStepStatus_SAGA_STEP_STATUS_FAILED      SagaStepStatus = 3
-)
-
-// Enum value maps for SagaStepStatus.
-var (
-	SagaStepStatus_name = map[int32]string{
-		0: "SAGA_STEP_STATUS_UNSPECIFIED",
-		1: "SAGA_STEP_STATUS_PENDING",
-		2: "SAGA_STEP_STATUS_COMPLETED",
-		3: "SAGA_STEP_STATUS_FAILED",
-	}
-	SagaStepStatus_value = map[string]int32{
-		"SAGA_STEP_STATUS_UNSPECIFIED": 0,
-		"SAGA_STEP_STATUS_PENDING":     1,
-		"SAGA_STEP_STATUS_COMPLETED":   2,
-		"SAGA_STEP_STATUS_FAILED":      3,
-	}
-)
-
-func (x SagaStepStatus) Enum() *SagaStepStatus {
-	p := new(SagaStepStatus)
-	*p = x
-	return p
-}
-
-func (x SagaStepStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SagaStepStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_orders_saga_orchestrator_proto_enumTypes[0].Descriptor()
-}
-
-func (SagaStepStatus) Type() protoreflect.EnumType {
-	return &file_orders_saga_orchestrator_proto_enumTypes[0]
-}
-
-func (x SagaStepStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SagaStepStatus.Descriptor instead.
-func (SagaStepStatus) EnumDescriptor() ([]byte, []int) {
-	return file_orders_saga_orchestrator_proto_rawDescGZIP(), []int{0}
-}
-
-// Статусы всей саги
 type SagaStatus int32
 
 const (
@@ -86,6 +33,7 @@ const (
 	SagaStatus_SAGA_STATUS_PENDING     SagaStatus = 1
 	SagaStatus_SAGA_STATUS_COMPLETED   SagaStatus = 2
 	SagaStatus_SAGA_STATUS_FAILED      SagaStatus = 3
+	SagaStatus_SAGA_STATUS_COMPENSATED SagaStatus = 4
 )
 
 // Enum value maps for SagaStatus.
@@ -95,12 +43,14 @@ var (
 		1: "SAGA_STATUS_PENDING",
 		2: "SAGA_STATUS_COMPLETED",
 		3: "SAGA_STATUS_FAILED",
+		4: "SAGA_STATUS_COMPENSATED",
 	}
 	SagaStatus_value = map[string]int32{
 		"SAGA_STATUS_UNSPECIFIED": 0,
 		"SAGA_STATUS_PENDING":     1,
 		"SAGA_STATUS_COMPLETED":   2,
 		"SAGA_STATUS_FAILED":      3,
+		"SAGA_STATUS_COMPENSATED": 4,
 	}
 )
 
@@ -115,11 +65,11 @@ func (x SagaStatus) String() string {
 }
 
 func (SagaStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_orders_saga_orchestrator_proto_enumTypes[1].Descriptor()
+	return file_orders_saga_orchestrator_proto_enumTypes[0].Descriptor()
 }
 
 func (SagaStatus) Type() protoreflect.EnumType {
-	return &file_orders_saga_orchestrator_proto_enumTypes[1]
+	return &file_orders_saga_orchestrator_proto_enumTypes[0]
 }
 
 func (x SagaStatus) Number() protoreflect.EnumNumber {
@@ -128,16 +78,64 @@ func (x SagaStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SagaStatus.Descriptor instead.
 func (SagaStatus) EnumDescriptor() ([]byte, []int) {
+	return file_orders_saga_orchestrator_proto_rawDescGZIP(), []int{0}
+}
+
+// Статусы всей саги
+type SagaStepStatus int32
+
+const (
+	SagaStepStatus_SAGA_STEP_STATUS_UNSPECIFIED SagaStepStatus = 0
+	SagaStepStatus_SAGA_STEP_STATUS_COMPLETED   SagaStepStatus = 1
+	SagaStepStatus_SAGA_STEP_STATUS_FAILED      SagaStepStatus = 2
+)
+
+// Enum value maps for SagaStepStatus.
+var (
+	SagaStepStatus_name = map[int32]string{
+		0: "SAGA_STEP_STATUS_UNSPECIFIED",
+		1: "SAGA_STEP_STATUS_COMPLETED",
+		2: "SAGA_STEP_STATUS_FAILED",
+	}
+	SagaStepStatus_value = map[string]int32{
+		"SAGA_STEP_STATUS_UNSPECIFIED": 0,
+		"SAGA_STEP_STATUS_COMPLETED":   1,
+		"SAGA_STEP_STATUS_FAILED":      2,
+	}
+)
+
+func (x SagaStepStatus) Enum() *SagaStepStatus {
+	p := new(SagaStepStatus)
+	*p = x
+	return p
+}
+
+func (x SagaStepStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SagaStepStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_orders_saga_orchestrator_proto_enumTypes[1].Descriptor()
+}
+
+func (SagaStepStatus) Type() protoreflect.EnumType {
+	return &file_orders_saga_orchestrator_proto_enumTypes[1]
+}
+
+func (x SagaStepStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SagaStepStatus.Descriptor instead.
+func (SagaStepStatus) EnumDescriptor() ([]byte, []int) {
 	return file_orders_saga_orchestrator_proto_rawDescGZIP(), []int{1}
 }
 
 // Шаг саги
 type SagaStep struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"` // "ivnentory_check" или "payment_check"
 	Status        SagaStepStatus         `protobuf:"varint,2,opt,name=status,proto3,enum=api.v1.orderssagaorchestrator.SagaStepStatus" json:"status,omitempty"`
-	Action        string                 `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`   // Действие (например: reserve, hold)
-	Service       string                 `protobuf:"bytes,4,opt,name=service,proto3" json:"service,omitempty"` // Сервис, выполняющий действие (inventory, payment)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -186,28 +184,13 @@ func (x *SagaStep) GetStatus() SagaStepStatus {
 	return SagaStepStatus_SAGA_STEP_STATUS_UNSPECIFIED
 }
 
-func (x *SagaStep) GetAction() string {
-	if x != nil {
-		return x.Action
-	}
-	return ""
-}
-
-func (x *SagaStep) GetService() string {
-	if x != nil {
-		return x.Service
-	}
-	return ""
-}
-
 // Сага для заказа
 type OrderSaga struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	OrderId       int64                  `protobuf:"varint,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	Status        SagaStatus             `protobuf:"varint,3,opt,name=status,proto3,enum=api.v1.orderssagaorchestrator.SagaStatus" json:"status,omitempty"`
-	CurrentStep   int32                  `protobuf:"varint,4,opt,name=current_step,json=currentStep,proto3" json:"current_step,omitempty"`
-	Steps         []*SagaStep            `protobuf:"bytes,5,rep,name=steps,proto3" json:"steps,omitempty"`
+	Steps         []*SagaStep            `protobuf:"bytes,4,rep,name=steps,proto3" json:"steps,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -261,13 +244,6 @@ func (x *OrderSaga) GetStatus() SagaStatus {
 		return x.Status
 	}
 	return SagaStatus_SAGA_STATUS_UNSPECIFIED
-}
-
-func (x *OrderSaga) GetCurrentStep() int32 {
-	if x != nil {
-		return x.CurrentStep
-	}
-	return 0
 }
 
 func (x *OrderSaga) GetSteps() []*SagaStep {
@@ -371,36 +347,33 @@ var File_orders_saga_orchestrator_proto protoreflect.FileDescriptor
 
 const file_orders_saga_orchestrator_proto_rawDesc = "" +
 	"\n" +
-	"\x1eorders-saga-orchestrator.proto\x12\x1dapi.v1.orderssagaorchestrator\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb2\x01\n" +
+	"\x1eorders-saga-orchestrator.proto\x12\x1dapi.v1.orderssagaorchestrator\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"n\n" +
 	"\bSagaStep\x12\x1b\n" +
 	"\x04name\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x04name\x12E\n" +
-	"\x06status\x18\x02 \x01(\x0e2-.api.v1.orderssagaorchestrator.SagaStepStatusR\x06status\x12\x1f\n" +
-	"\x06action\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x06action\x12!\n" +
-	"\aservice\x18\x04 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\aservice\"\xed\x01\n" +
+	"\x06status\x18\x02 \x01(\x0e2-.api.v1.orderssagaorchestrator.SagaStepStatusR\x06status\"\xca\x01\n" +
 	"\tOrderSaga\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x02id\x12\"\n" +
 	"\border_id\x18\x02 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\aorderId\x12A\n" +
-	"\x06status\x18\x03 \x01(\x0e2).api.v1.orderssagaorchestrator.SagaStatusR\x06status\x12!\n" +
-	"\fcurrent_step\x18\x04 \x01(\x05R\vcurrentStep\x12=\n" +
-	"\x05steps\x18\x05 \x03(\v2'.api.v1.orderssagaorchestrator.SagaStepR\x05steps\"9\n" +
+	"\x06status\x18\x03 \x01(\x0e2).api.v1.orderssagaorchestrator.SagaStatusR\x06status\x12=\n" +
+	"\x05steps\x18\x04 \x03(\v2'.api.v1.orderssagaorchestrator.SagaStepR\x05steps\"9\n" +
 	"\x13GetOrderSagaRequest\x12\"\n" +
 	"\border_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\aorderId\"T\n" +
 	"\x14GetOrderSagaResponse\x12<\n" +
-	"\x04saga\x18\x01 \x01(\v2(.api.v1.orderssagaorchestrator.OrderSagaR\x04saga*\x8d\x01\n" +
-	"\x0eSagaStepStatus\x12 \n" +
-	"\x1cSAGA_STEP_STATUS_UNSPECIFIED\x10\x00\x12\x1c\n" +
-	"\x18SAGA_STEP_STATUS_PENDING\x10\x01\x12\x1e\n" +
-	"\x1aSAGA_STEP_STATUS_COMPLETED\x10\x02\x12\x1b\n" +
-	"\x17SAGA_STEP_STATUS_FAILED\x10\x03*u\n" +
+	"\x04saga\x18\x01 \x01(\v2(.api.v1.orderssagaorchestrator.OrderSagaR\x04saga*\x92\x01\n" +
 	"\n" +
 	"SagaStatus\x12\x1b\n" +
 	"\x17SAGA_STATUS_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13SAGA_STATUS_PENDING\x10\x01\x12\x19\n" +
 	"\x15SAGA_STATUS_COMPLETED\x10\x02\x12\x16\n" +
-	"\x12SAGA_STATUS_FAILED\x10\x032\xde\x02\n" +
-	"\x1dOrdersSagaOrchestratorService\x12\xbc\x02\n" +
-	"\fGetOrderSaga\x122.api.v1.orderssagaorchestrator.GetOrderSagaRequest\x1a3.api.v1.orderssagaorchestrator.GetOrderSagaResponse\"\xc2\x01\x92A\x9b\x01\n" +
-	"\x05sagas\x12(Получение саги заказа\x1ahПолучение информации о саге заказа и её шагах выполнения\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/sagas/orders/{order_id}B\x98\x01\x92A\x84\x01\x12^\n" +
+	"\x12SAGA_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17SAGA_STATUS_COMPENSATED\x10\x04*o\n" +
+	"\x0eSagaStepStatus\x12 \n" +
+	"\x1cSAGA_STEP_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aSAGA_STEP_STATUS_COMPLETED\x10\x01\x12\x1b\n" +
+	"\x17SAGA_STEP_STATUS_FAILED\x10\x022\xe2\x02\n" +
+	"\x1dOrdersSagaOrchestratorService\x12\xc0\x02\n" +
+	"\fGetOrderSaga\x122.api.v1.orderssagaorchestrator.GetOrderSagaRequest\x1a3.api.v1.orderssagaorchestrator.GetOrderSagaResponse\"\xc6\x01\x92A\x9b\x01\n" +
+	"\x05sagas\x12(Получение саги заказа\x1ahПолучение информации о саге заказа и её шагах выполнения\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/sagas/orders/{order_id}B\x98\x01\x92A\x84\x01\x12^\n" +
 	"\x18Orders Saga Orchestrator\x12;Service for managing order sagas and their completion steps2\x051.0.02\x10application/json:\x10application/jsonZ\x0epkg/api/v1;apib\x06proto3"
 
 var (
@@ -418,16 +391,16 @@ func file_orders_saga_orchestrator_proto_rawDescGZIP() []byte {
 var file_orders_saga_orchestrator_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_orders_saga_orchestrator_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_orders_saga_orchestrator_proto_goTypes = []any{
-	(SagaStepStatus)(0),          // 0: api.v1.orderssagaorchestrator.SagaStepStatus
-	(SagaStatus)(0),              // 1: api.v1.orderssagaorchestrator.SagaStatus
+	(SagaStatus)(0),              // 0: api.v1.orderssagaorchestrator.SagaStatus
+	(SagaStepStatus)(0),          // 1: api.v1.orderssagaorchestrator.SagaStepStatus
 	(*SagaStep)(nil),             // 2: api.v1.orderssagaorchestrator.SagaStep
 	(*OrderSaga)(nil),            // 3: api.v1.orderssagaorchestrator.OrderSaga
 	(*GetOrderSagaRequest)(nil),  // 4: api.v1.orderssagaorchestrator.GetOrderSagaRequest
 	(*GetOrderSagaResponse)(nil), // 5: api.v1.orderssagaorchestrator.GetOrderSagaResponse
 }
 var file_orders_saga_orchestrator_proto_depIdxs = []int32{
-	0, // 0: api.v1.orderssagaorchestrator.SagaStep.status:type_name -> api.v1.orderssagaorchestrator.SagaStepStatus
-	1, // 1: api.v1.orderssagaorchestrator.OrderSaga.status:type_name -> api.v1.orderssagaorchestrator.SagaStatus
+	1, // 0: api.v1.orderssagaorchestrator.SagaStep.status:type_name -> api.v1.orderssagaorchestrator.SagaStepStatus
+	0, // 1: api.v1.orderssagaorchestrator.OrderSaga.status:type_name -> api.v1.orderssagaorchestrator.SagaStatus
 	2, // 2: api.v1.orderssagaorchestrator.OrderSaga.steps:type_name -> api.v1.orderssagaorchestrator.SagaStep
 	3, // 3: api.v1.orderssagaorchestrator.GetOrderSagaResponse.saga:type_name -> api.v1.orderssagaorchestrator.OrderSaga
 	4, // 4: api.v1.orderssagaorchestrator.OrdersSagaOrchestratorService.GetOrderSaga:input_type -> api.v1.orderssagaorchestrator.GetOrderSagaRequest

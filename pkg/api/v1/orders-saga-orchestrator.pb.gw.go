@@ -84,7 +84,7 @@ func RegisterOrdersSagaOrchestratorServiceHandlerServer(ctx context.Context, mux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/api.v1.orderssagaorchestrator.OrdersSagaOrchestratorService/GetOrderSaga", runtime.WithHTTPPathPattern("/v1/sagas/orders/{order_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/api.v1.orderssagaorchestrator.OrdersSagaOrchestratorService/GetOrderSaga", runtime.WithHTTPPathPattern("/api/v1/sagas/orders/{order_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -142,7 +142,7 @@ func RegisterOrdersSagaOrchestratorServiceHandlerClient(ctx context.Context, mux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/api.v1.orderssagaorchestrator.OrdersSagaOrchestratorService/GetOrderSaga", runtime.WithHTTPPathPattern("/v1/sagas/orders/{order_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/api.v1.orderssagaorchestrator.OrdersSagaOrchestratorService/GetOrderSaga", runtime.WithHTTPPathPattern("/api/v1/sagas/orders/{order_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -159,7 +159,7 @@ func RegisterOrdersSagaOrchestratorServiceHandlerClient(ctx context.Context, mux
 }
 
 var (
-	pattern_OrdersSagaOrchestratorService_GetOrderSaga_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "sagas", "orders", "order_id"}, ""))
+	pattern_OrdersSagaOrchestratorService_GetOrderSaga_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "sagas", "orders", "order_id"}, ""))
 )
 
 var (
