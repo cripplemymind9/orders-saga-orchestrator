@@ -11,17 +11,17 @@ func (s *Server) GetOrderSaga(
 	ctx context.Context,
 	req *api.GetOrderSagaRequest,
 ) (*api.GetOrderSagaResponse, error) {
-	saga, err := s.dependencies.getSagaByOrderIDUseCase.GetSagaByOrderID(ctx, req.OrderId)
+	saga, err := s.dependencies.getSagaByOrderIDUseCase.GetSagaByOrderID(ctx, req.GetOrderId())
 	if err != nil {
 		return nil, err
 	}
 
 	return &api.GetOrderSagaResponse{
 		Saga: &api.OrderSaga{
-			Id:          saga.ID,
-			OrderId:     saga.OrderID,
-			Status:      convertStatus(saga.Status),
-			Steps:       convertSteps(saga.Steps),
+			Id:      saga.ID,
+			OrderId: saga.OrderID,
+			Status:  convertStatus(saga.Status),
+			Steps:   convertSteps(saga.Steps),
 		},
 	}, nil
 }

@@ -2,7 +2,7 @@ package server
 
 import "github.com/cripplemymind9/orders-saga-orchestrator/internal/domain/usecase"
 
-type Dependencies struct{
+type Dependencies struct {
 	getSagaByOrderIDUseCase *usecase.GetSagaByOrderIDUseCase
 }
 

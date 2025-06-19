@@ -45,8 +45,8 @@ func (q *queries) GetSagaByOrderID(ctx context.Context, id int64) (entity.Saga, 
 		out.UpdatedAt = &updatedAt.Time
 	}
 
-	if err := json.Unmarshal(stepsJSON, &out.Steps); err != nil {
-		return entity.Saga{}, err
+	if unmarshalErr := json.Unmarshal(stepsJSON, &out.Steps); unmarshalErr != nil {
+		return entity.Saga{}, unmarshalErr
 	}
 
 	return out, nil

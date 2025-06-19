@@ -22,6 +22,6 @@ type Saga struct {
 }
 
 type Step struct {
-	Name      string
-	Status    string
+	Name   string
+	Status string
 }
